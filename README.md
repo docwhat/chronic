@@ -1,3 +1,8 @@
+[![GitHub
+release](https://img.shields.io/github/release/docwhat/chronic.svg)](https://github.com/docwhat/chronic/releases)
+[![Build
+Status](https://travis-ci.org/docwhat/chronic.svg?branch=master)](https://travis-ci.org/docwhat/chronic)
+
 chronic
 =======
 
@@ -28,25 +33,47 @@ With `chronic` you don't have to worry about that anymore!
     0 4 0 0 0 chronic my-noisy-command -vF
 
 Now, you'll get no emails unless `my-noisy-command` returns a non-zero exit
-code.  If it does return a non-zero exit code, then you'll get an email that
+code. If it does return a non-zero exit code, then you'll get an email that
 looks like this:
 
-```
-To: admin@example.com
-Subject: [CRON] chronic my-noisy-command -vF
+    To: admin@example.com
+    Subject: [CRON] chronic my-noisy-command -vF
 
-**** command ****
-[`bash` `-c` `echo "boo"; echo "emergency" 1>&2; exit 10`]
+    **** command ****
+    [`bash` `-c` `echo "boo"; echo "emergency" 1>&2; exit 10`]
 
-**** stdout ****
-stdout: Normal output from the noisy command.
-stdout: Starting messages
-stdout: Normal stuff
+    **** stdout ****
+    stdout: Normal output from the noisy command.
+    stdout: Starting messages
+    stdout: Normal stuff
 
-**** stderr ****
-stderr: Standard error output from the noisy command.
-stderr:
-stderr: [FATAL] Something went wrong!
+    **** stderr ****
+    stderr: Standard error output from the noisy command.
+    stderr:
+    stderr: [FATAL] Something went wrong!
 
-Exited with 10
-```
+    Exited with 10
+
+Installation
+------------
+
+### Download binaries
+
+The latest release is available on
+[github.com/docwhat/chronic/releases](https://github.com/docwhat/chronic/releases).
+You can download the binary for your architecture and OS there.
+
+### Compile it yourself
+
+You'll need to install a recent version of [Go](https://golang.org/) and set it
+up. You can check the `.travis.yml` file to see what version of go I'm using.
+
+\`\`~\~~ .sh \$ go get -u docwhat.org/chronic ~\~~
+
+Developers
+----------
+
+While this project has a `Rakefile` it isn't needed for normal development; it
+is only used for CI builds.
+
+You can use the normal `go` tools to build and install it.
