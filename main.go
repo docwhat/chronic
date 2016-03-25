@@ -19,7 +19,7 @@ var (
 
 func parseFlags() {
 	if 1 == len(os.Args) {
-		fmt.Printf("Usage: %s command [args]...", program)
+		fmt.Printf("Usage: %s command [args]...\n", program)
 		os.Exit(0)
 	}
 
