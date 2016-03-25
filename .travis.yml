@@ -28,3 +28,4 @@ deploy:
     - build/chronic-windows-amd64
   on:
     repo: docwhat/chronic
+    tags: true
