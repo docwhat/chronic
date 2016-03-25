@@ -70,7 +70,9 @@ You can download the binary for your architecture and OS there.
 You'll need to install a recent version of [Go](https://golang.org/) and set it
 up. You can check the `.travis.yml` file to see what version of go I'm using.
 
-\`\`~\~~ .sh \$ go get -u docwhat.org/chronic ~\~~
+``` .sh
+$ go get -u docwhat.org/chronic
+```
 
 Developers
 ----------
