@@ -45,14 +45,18 @@ func emitCommand() {
 
 func emitOutput(name string, file *os.File) {
 	shownHeader := false
+
 	file.Seek(0, 0)
 	buff := bufio.NewScanner(file)
+
 	for buff.Scan() {
 		if !shownHeader {
 			fmt.Printf("**** %s ****\n", name)
+			shownHeader = true
 		}
 		fmt.Printf("%s: %s\n", name, buff.Text())
 	}
+
 	if shownHeader {
 		fmt.Println()
 	}
