@@ -1,0 +1,35 @@
+#!/bin/bash
+
+cat <<STDOUT
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
+nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
+fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+culpa qui officia deserunt mollit anim id est laborum.
+
+STDOUT
+
+cat <<STDERR 1>&2
+
+If we shadows have offended,
+Think but this, and all is mended,
+That you have but slumber'd here
+While these visions did appear.
+And this weak and idle theme,
+No more yielding but a dream,
+Gentles, do not reprehend:
+if you pardon, we will mend:
+And, as I am an honest Puck,
+If we have unearned luck
+Now to 'scape the serpent's tongue,
+We will make amends ere long;
+Else the Puck a liar call;
+So, good night unto you all.
+Give me your hands, if we be friends,
+And Robin shall restore amends.
+
+STDERR
+
+exit ${1:-0}
