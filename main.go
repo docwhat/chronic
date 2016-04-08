@@ -19,11 +19,16 @@ var (
 
 func parseFlags() {
 	if 1 == len(os.Args) {
-		fmt.Printf("Usage: %s command [args]...\n", program)
+		showUsage()
 		os.Exit(0)
 	}
 
 	command = os.Args[1:]
+}
+
+func showUsage() {
+	fmt.Printf("Usage: %s <command> [args]...\n\n", program)
+	fmt.Println("Chronic runs the <command> and hides the output unless the command returns a non-zero exit code.")
 }
 
 func tempFile(prefix string) *os.File {
@@ -68,6 +73,8 @@ func fatal(err error) {
 		fmt.Printf("[FATAL %s] User:  %q (%s)\n", program, user.Username, user.Uid)
 	}
 	fmt.Printf("[FATAL %s] $PATH: %s\n", program, os.Getenv("PATH"))
+	fmt.Printf("\n")
+	showUsage()
 	os.Exit(1)
 }
 
