@@ -48,7 +48,7 @@ func emitCommand() {
 	fmt.Println()
 }
 
-func emitOutput(name string, file *os.File) {
+func emitOutput(name string, file io.ReadSeeker) {
 	shownHeader := false
 
 	if _, err := file.Seek(0, 0); err != nil {
