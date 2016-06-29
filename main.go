@@ -78,7 +78,9 @@ func fatal(err error) {
 	os.Exit(1)
 }
 
-func runCommand() int {
+func main() {
+	parseFlags()
+
 	var stdout io.ReadCloser
 	var stderr io.ReadCloser
 	var err error
@@ -105,24 +107,17 @@ func runCommand() int {
 	if err := cmd.Wait(); err != nil {
 		if exiterr, ok := err.(*exec.ExitError); ok {
 			emitCommand()
-
 			emitOutput("stdout", tmpOut)
-
 			emitOutput("stderr", tmpErr)
 
 			if status, ok := exiterr.Sys().(syscall.WaitStatus); ok {
 				ec := status.ExitStatus()
 				fmt.Printf("Exited with %d\n", ec)
-				return ec
+				os.Exit(ec)
 			}
 		} else {
 			fatal(err)
 		}
 	}
-	return 0
-}
-
-func main() {
-	parseFlags()
-	os.Exit(runCommand())
+	os.Exit(0)
 }
