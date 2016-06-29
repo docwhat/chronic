@@ -24,6 +24,9 @@ _testmain.go
 *.prof
 
 # My binaries
-chronic
+/chronic
+/chronic_darwin*
+/chronic_linux*
+/*.exe
 /vendor/
 /build/
