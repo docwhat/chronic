@@ -18,7 +18,7 @@ var (
 )
 
 func parseFlags() {
-	if 1 == len(os.Args) {
+	if len(os.Args) == 1 {
 		showUsage()
 		os.Exit(0)
 	}
