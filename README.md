@@ -2,6 +2,8 @@
 release](https://img.shields.io/github/release/docwhat/chronic.svg)](https://github.com/docwhat/chronic/releases)
 [![Build
 Status](https://travis-ci.org/docwhat/chronic.svg?branch=master)](https://travis-ci.org/docwhat/chronic)
+[![Go Report
+Card](https://goreportcard.com/badge/github.com/docwhat/chronic)](https://goreportcard.com/report/github.com/docwhat/chronic)
 [![GitHub
 issues](https://img.shields.io/github/issues/docwhat/chronic.svg)](https://github.com/docwhat/chronic/issues)
 
