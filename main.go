@@ -51,7 +51,9 @@ func emitCommand() {
 func emitOutput(name string, file *os.File) {
 	shownHeader := false
 
-	file.Seek(0, 0)
+	if _, err := file.Seek(0, 0); err != nil {
+		fatal(err)
+	}
 	buff := bufio.NewScanner(file)
 
 	for buff.Scan() {
