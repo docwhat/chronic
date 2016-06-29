@@ -17,20 +17,14 @@ end
 desc 'Fetch all dependencies'
 task :setup do
   sh 'go version'
-  sh 'go get -u github.com/golang/lint/golint'
+  sh 'go get -u -v '\
+    ' github.com/alecthomas/gometalinter'
+  sh 'gometalinter --install --update'
 end
 
-desc 'Lint the code'
-task lint: %w( lint:vet lint:golint )
-
-namespace :lint do
-  task :vet do
-    sh "go tool vet #{GO_SOURCE}"
-  end
-
-  task :golint do
-    sh "golint #{GO_SOURCE}"
-  end
+desc 'Check lint and style'
+task :lint do
+  sh 'gometalinter --deadline=1m --disable=gotype ./...'
 end
 
 desc 'Test the code'
