@@ -13,6 +13,7 @@ import (
 )
 
 var (
+	version = "1.0.3"
 	command []string
 	program = filepath.Base(os.Args[0])
 )
@@ -27,8 +28,10 @@ func parseFlags() {
 }
 
 func showUsage() {
-	fmt.Printf("Usage: %s <command> [args]...\n\n", program)
-	fmt.Println("Chronic runs the <command> and hides the output unless the command returns a non-zero exit code.")
+	fmt.Printf("Usage: %s <command> [args]...\n", program)
+	fmt.Printf("Version: %s\n", version)
+	fmt.Println("")
+	fmt.Println("  Chronic runs the <command> and hides the output unless the command returns a non-zero exit code.")
 }
 
 func tempFile(prefix string) *os.File {
