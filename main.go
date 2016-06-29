@@ -101,10 +101,14 @@ func main() {
 	}
 
 	tmpOut := tempFile("stdout")
-	io.Copy(tmpOut, stdout)
+	if _, err = io.Copy(tmpOut, stdout); err != nil {
+		fatal(err)
+	}
 
 	tmpErr := tempFile("stderr")
-	io.Copy(tmpErr, stderr)
+	if _, err = io.Copy(tmpErr, stderr); err != nil {
+		fatal(err)
+	}
 
 	if err := cmd.Wait(); err != nil {
 		if exiterr, ok := err.(*exec.ExitError); ok {
