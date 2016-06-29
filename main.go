@@ -38,8 +38,15 @@ func tempFile(prefix string) *os.File {
 	if tempFile, err = ioutil.TempFile("", program+"-"+prefix); err != nil {
 		fatal(err)
 	}
-	defer os.Remove(tempFile.Name())
+
+	defer removeOrDie(tempFile.Name())
 	return tempFile
+}
+
+func removeOrDie(fname string) {
+	if err := os.Remove(fname); err != nil {
+		fatal(err)
+	}
 }
 
 func emitCommand() {
