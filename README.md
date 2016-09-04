@@ -79,7 +79,4 @@ $ go get -u docwhat.org/chronic
 Developers
 ----------
 
-While this project has a `Rakefile` it isn't needed for normal development; it
-is only used for CI builds.
-
-You can use the normal `go` tools to build and install it.
+I love contributions! Read [CONTRIBUTING.md](CONTRIBUTING.md)!

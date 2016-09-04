@@ -1,0 +1,15 @@
+#!/bin/bash
+#
+# Sets up all the dependencies, etc. so you can build and test.
+
+set -euo pipefail
+source "$(dirname "$0")/utilities.bash"
+
+header "Lint"
+gometalinter \
+  --deadline=1m \
+  --vendored-linters \
+  --disable=gotype \
+  -I '/Subprocess launching with variable/'
+
+# vim: set ft=sh :

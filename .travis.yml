@@ -1,6 +1,6 @@
 sudo: false
 language: go
-go: 1.6
+go: 1.7
 notifications:
   email:
     on_success: never
@@ -8,11 +8,12 @@ notifications:
 before_install:
   - go version
 install:
-  - rake setup
+  - ./script/bootstrap
 script:
-  - rake -j2 lint test
-  - rake xbuild
-  - ls -alh
+  - ./script/test
+  - ./script/lint
+  - ./script/build all
+  - ls -lh
 deploy:
   provider: releases
   skip_cleanup: true
