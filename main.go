@@ -13,7 +13,7 @@ import (
 )
 
 var (
-	version = "1.0.4"
+	version = "unknown"
 	command []string
 	program = filepath.Base(os.Args[0])
 )

@@ -9,16 +9,21 @@
 #      ./script/build all
 
 set -euo pipefail
+# shellcheck source=script/utilities.bash
 source "$(dirname "$0")/utilities.bash"
+
 progname="chronic"
 
 osarch="${1:-native}"
 export CGO_ENABLED=0 # Force static compiling
 
+version="$(git describe --tags || echo unreleased)"
+ldflags="-s -w -X main.version=${version}"
+
 function dogox()
 {
   gox \
-    -ldflags "-s -w" \
+    -ldflags "$ldflags" \
     -osarch="$*" \
     -output="${progname}_{{.OS}}_{{.Arch}}"
 }
@@ -30,7 +35,7 @@ if [[ "$osarch" == *all* ]]; then
     linux/amd64
     linux/386
     linux/ppc64le
-    
+
     windows/amd64
     windows/386
   )
@@ -40,7 +45,7 @@ if [[ "$osarch" == *all* ]]; then
 else
   header "Building native binary"
   go build \
-    -ldflags "-s -w" \
+    -ldflags "$ldflags" \
     -o "$progname" \
     ./*.go
 fi
