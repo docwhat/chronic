@@ -3,6 +3,7 @@
 # Runs all tests.
 
 set -euo pipefail
+# shellcheck source=./utilities.bash
 source "$(dirname "$0")/utilities.bash"
 
 header "Tests"

@@ -9,7 +9,7 @@
 #      ./script/build all
 
 set -euo pipefail
-# shellcheck source=script/utilities.bash
+# shellcheck source=./utilities.bash
 source "$(dirname "$0")/utilities.bash"
 
 progname="chronic"
