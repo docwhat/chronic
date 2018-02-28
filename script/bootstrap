@@ -8,7 +8,7 @@ set -euo pipefail
 source "$(dirname "$0")/utilities.bash"
 
 header "Fetching utilites"
-go install "$@" -v \
+go get "$@" -v \
   gopkg.in/alecthomas/gometalinter.v2 \
   github.com/mitchellh/gox
 
