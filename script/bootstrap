@@ -8,11 +8,11 @@ set -euo pipefail
 source "$(dirname "$0")/utilities.bash"
 
 header "Fetching utilites"
-go get -u -v \
-  github.com/alecthomas/gometalinter \
+go install "$@" -v \
+  gopkg.in/alecthomas/gometalinter.v2 \
   github.com/mitchellh/gox
 
 header "Installing gometalinter tools"
-gometalinter --install
+gometalinter.v2 --install
 
 # vim: set ft=sh :
