@@ -98,6 +98,7 @@ func main() {
 	var err error
 
 	cmd := exec.Command(command[0], command[1:]...)
+	cmd.Stdin = os.Stdin
 
 	if stdout, err = cmd.StdoutPipe(); err != nil {
 		fatal(err)
