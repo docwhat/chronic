@@ -42,14 +42,7 @@ func tempFile(prefix string) *os.File {
 		fatal(err)
 	}
 
-	defer removeOrDie(tempFile.Name())
 	return tempFile
-}
-
-func removeOrDie(fname string) {
-	if err := os.Remove(fname); err != nil {
-		fatal(err)
-	}
 }
 
 func emitCommand() {
@@ -79,7 +72,7 @@ func emitOutput(name string, file io.ReadSeeker) {
 	}
 }
 
-func fatal(err error) {
+func fatal(err error) int {
 	fmt.Printf("[FATAL %s] %s\n", program, err)
 	if user, err := user.Current(); err == nil {
 		fmt.Printf("[FATAL %s] User:  %q (%s)\n", program, user.Username, user.Uid)
@@ -87,12 +80,10 @@ func fatal(err error) {
 	fmt.Printf("[FATAL %s] $PATH: %s\n", program, os.Getenv("PATH"))
 	fmt.Printf("\n")
 	showUsage()
-	os.Exit(1)
+	return -1
 }
 
-func main() {
-	parseFlags()
-
+func run() int {
 	var stdout io.ReadCloser
 	var stderr io.ReadCloser
 	var err error
@@ -101,24 +92,26 @@ func main() {
 	cmd.Stdin = os.Stdin
 
 	if stdout, err = cmd.StdoutPipe(); err != nil {
-		fatal(err)
+		return fatal(err)
 	}
 	if stderr, err = cmd.StderrPipe(); err != nil {
-		fatal(err)
+		return fatal(err)
 	}
 
 	if err = cmd.Start(); err != nil {
-		fatal(err)
+		return fatal(err)
 	}
 
 	tmpOut := tempFile("stdout")
+	defer os.Remove(tmpOut.Name())
 	if _, err = io.Copy(tmpOut, stdout); err != nil {
-		fatal(err)
+		return fatal(err)
 	}
 
 	tmpErr := tempFile("stderr")
+	defer os.Remove(tmpErr.Name())
 	if _, err = io.Copy(tmpErr, stderr); err != nil {
-		fatal(err)
+		return fatal(err)
 	}
 
 	if err := cmd.Wait(); err != nil {
@@ -130,11 +123,17 @@ func main() {
 			if status, ok := exiterr.Sys().(syscall.WaitStatus); ok {
 				ec := status.ExitStatus()
 				fmt.Printf("Exited with %d\n", ec)
-				os.Exit(ec)
+				return ec
 			}
 		} else {
-			fatal(err)
+			return fatal(err)
 		}
 	}
-	os.Exit(0)
+	return 0
+}
+
+func main() {
+	parseFlags()
+
+	os.Exit(run())
 }
