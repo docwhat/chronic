@@ -2,26 +2,25 @@
 #
 # Utility functions for pretty output
 
-cd "$(dirname "$0")"
-cd ..
+cd "$(dirname "$0")" || exit 10
+cd .. || exit 10
 
 sent_header=f
-colors=$(( $(tput colors 2> /dev/null || :) + 0 ))
+colors=$(($(tput colors 2>/dev/null || :) + 0))
+export PATH="${PWD}/bin:${PATH}"
 
-function colorize()
-{
-  if (( colors >= 8 )); then
+function colorize() {
+  if ((colors >= 8)); then
     tput bold
     tput setaf 4
   fi
   cat -
-  if (( colors >= 8 )); then
+  if ((colors >= 8)); then
     tput sgr0
   fi
 }
 
-function header()
-{
+function header() {
   if [ "$sent_header" = t ]; then
     echo
   fi
@@ -30,9 +29,10 @@ function header()
   sent_header=t
 }
 
-function join_by()
-{
-  local IFS="$1"; shift; echo "$*";
+function join_by() {
+  local IFS="$1"
+  shift
+  echo "$*"
 }
 
 # vim: set ft=sh :

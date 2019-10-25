@@ -7,10 +7,6 @@ set -euo pipefail
 source "$(dirname "$0")/utilities.bash"
 
 header "Lint"
-gometalinter.v2 \
-  --deadline=1m \
-  --vendored-linters \
-  --disable=gotype \
-  -I '/Subprocess launching with variable/'
+golangci-lint run ./...
 
 # vim: set ft=sh :

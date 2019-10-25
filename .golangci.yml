@@ -1,0 +1,11 @@
+run:
+  tests: false
+
+linters:
+  enable-all: true
+  disable:
+    - funlen
+    - gochecknoglobals
+    - godox
+    - lll
+    - wsl
