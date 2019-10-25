@@ -88,7 +88,7 @@ func run() int {
 	var stderr io.ReadCloser
 	var err error
 
-	cmd := exec.Command(command[0], command[1:]...)
+	cmd := exec.Command(command[0], command[1:]...) /* #nosec G204 */
 	cmd.Stdin = os.Stdin
 
 	if stdout, err = cmd.StdoutPipe(); err != nil {
