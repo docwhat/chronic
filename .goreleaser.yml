@@ -1,0 +1,73 @@
+# http://goreleaser.com
+env:
+  - GO111MODULE=on
+  - GOPROXY=https://gocenter.io
+before:
+  hooks:
+    - go mod tidy
+builds:
+  - binary: chronic
+    goos:
+      - linux
+      - darwin
+      - windows
+      - freebsd
+    goarch:
+      - 386
+      - amd64
+      - arm
+      - arm64
+      - ppc64le
+      - s390x
+    goarm:
+      - 6
+      - 7
+    env:
+      - CGO_ENABLED=0
+archives:
+- replacements:
+    darwin: Darwin
+    linux: Linux
+    windows: Windows
+    386: i386
+    amd64: x86_64
+  format: binary
+  files:
+    - LICENSE*
+    - README*
+
+checksum:
+  name_template: 'checksums.txt'
+snapshot:
+  name_template: "{{ .Tag }}-next"
+
+brews:
+  - github:
+      owner: docwhat
+      name: homebrew-tap
+    folder: Formula
+    homepage:  https://github.com/docwhat/chronic
+    description: "A tool that hides output unless the command fails; now in Go!"
+    test: |
+      system "#{bin}/chronic"
+
+changelog:
+  sort: asc
+  filters:
+    exclude:
+      # CHANGELOG worthy:
+      # feat: add beta sequence
+      # fix: remove broken confirmation message
+      # refactor: share logic between 4d3d3d3 and flarhgunnstow
+      # perf: improved performance of the zabbit
+      #
+      # NOISE:
+      # chore: add Oyster build script
+      # docs: explain hat wobble
+      # lint: convert tabs to spaces
+      # style: convert tabs to spaces
+      # test: ensure Tayne retains clothing
+      - '(?i)^(chore|docs|lint|style|test)'
+      - '(?i)typo|thinko'
+      - Merge pull request
+      - Merge branch

@@ -1,0 +1,58 @@
+name: release
+
+on:
+  pull_request:
+  push:
+  schedule:
+    - cron: "53 22 * * 2"
+
+jobs:
+  checkout:
+    runs-on: ubuntu-latest
+    steps:
+      -
+        name: checkout
+        uses: actions/checkout@v1
+      - name: bootstrap
+        run: |
+          ./script/bootstrap
+
+  lint:
+    runs-on: ubuntu-latest
+    needs: checkout
+    steps:
+      -
+        name: lint
+        run: ./script/lint
+
+  buildenv:
+    runs-on: ubuntu-latest
+    needs: checkout
+    steps:
+      -
+        name: get go
+        uses: actions/setup-go@v1
+        with:
+          go-version: '1.13'
+
+  test:
+    runs-on: ubuntu-latest
+    needs: buildenv
+    steps:
+      -
+        name: test
+        run: |
+          ./script/test
+
+  release:
+    runs-on: ubuntu-latest
+    needs: buildenv
+    steps:
+      -
+        name: goreleaser
+        uses: goreleaser/goreleaser-action@v1
+        with:
+          version: latest
+          args: release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
