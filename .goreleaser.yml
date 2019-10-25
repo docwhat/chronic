@@ -53,7 +53,7 @@ snapshot:
   name_template: "{{ .Tag }}-next"
 
 release:
-  ids: ["default"]
+  ids: ["default", "homebrew"]
 
 brews:
   - ids: ["homebrew"]
