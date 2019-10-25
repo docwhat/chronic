@@ -6,7 +6,8 @@ before:
   hooks:
     - go mod tidy
 builds:
-  - binary: chronic
+  - id: default
+    binary: chronic
     goos:
       - linux
       - darwin
@@ -24,17 +25,39 @@ builds:
       - 7
     env:
       - CGO_ENABLED=0
+  - id: homebrew
+    binary: chronic
+    goos:
+      - linux
+      - darwin
+    goarch:
+      - 386
+      - amd64
+
 archives:
-  -
+  - id: default
+    builds: [default]
     format: binary
+    name_template: "{{ .Binary }}_{{ .Os }}_{{ .Arch }}{{ if .Arm }}v{{ .Arm }}{{ end }}"
+
+  - id: homebrew
+    builds: [homebrew]
+    format: tar.gz
+    format_overrides:
+      - goos: windows
+        format: zip
 
 checksum:
-  name_template: 'checksums.txt'
+  name_template: "checksums.txt"
 snapshot:
   name_template: "{{ .Tag }}-next"
 
+release:
+  ids: ["default"]
+
 brews:
-  - github:
+  - ids: ["homebrew"]
+    github:
       owner: docwhat
       name: homebrew-tap
     folder: Formula
