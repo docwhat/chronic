@@ -51,7 +51,6 @@ jobs:
         uses: goreleaser/goreleaser-action@v1
         with:
           version: latest
-          args: release --debug
+          args: release
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          GITHUB_USER: docwhat
+          GITHUB_TOKEN: ${{ secrets.CUSTOM_GITHUB_TOKEN }}
