@@ -54,6 +54,7 @@ snapshot:
 
 release:
   ids: ["default", "homebrew"]
+  prerelease: "auto"
 
 brews:
   - ids: ["homebrew"]
