@@ -1,0 +1,81 @@
+name: build
+
+on:
+  pull_request:
+  push:
+  schedule:
+    - cron: "53 22 * * 2"
+
+jobs:
+  lint:
+    name: "💨 lint"
+    runs-on: ubuntu-latest
+    steps:
+      -
+        name: checkout
+        uses: actions/checkout@v1
+      -
+        name: bootstrap
+        run: |
+          ./script/bootstrap
+      -
+        name: lint
+        run: ./script/lint
+
+  build:
+    name: "⚒️ build"
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macOS-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      -
+        name: get go
+        uses: actions/setup-go@v1
+        with:
+          go-version: 1.13
+      -
+        name: checkout
+        uses: actions/checkout@v1
+      -
+        name: compile
+        run: |
+          go run ./...
+
+  test:
+    name: "🧪 test"
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macOS-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      -
+        name: get go
+        uses: actions/setup-go@v1
+        with:
+          go-version: 1.13
+      -
+        name: checkout
+        uses: actions/checkout@v1
+      -
+        name: test
+        run: |
+          ./script/test
+
+  release:
+    name: "🚀 release"
+    runs-on: ubuntu-latest
+    steps:
+      -
+        name: get go
+        uses: actions/setup-go@v1
+        with:
+          go-version: 1.13
+      -
+        name: checkout
+        uses: actions/checkout@v1
+      -
+        name: goreleaser
+        uses: goreleaser/goreleaser-action@v1
+        with:
+          args: release --snapshot --skip-publish
