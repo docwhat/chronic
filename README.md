@@ -46,7 +46,21 @@ Now, you'll get no emails unless `my-noisy-command` returns a non-zero exit code
 
 ### Download binaries
 
-The latest release is available on [github.com/docwhat/chronic/releases](https://github.com/docwhat/chronic/releases). You can download the binary for your architecture and OS there.
+#### Homebrew
+
+```console
+brew install docwhat/tap/chronic
+```
+
+#### GitHub Releases
+
+The latest release is available on [`github.com/docwhat/chronic/releases`](https://github.com/docwhat/chronic/releases). You can download the binary for your architecture and OS there.
+
+#### Source
+
+```console
+go get docwhat.org/chronic
+```
 
 ### Compile it yourself
 
