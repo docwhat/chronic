@@ -60,7 +60,10 @@ brews:
     github:
       owner: docwhat
       name: homebrew-tap
-    folder: Formula
+    commit_author:
+      name: "Christian Höltje"
+      email: "docwhat@gerf.org"
+    skip_upload: true
     homepage:  https://github.com/docwhat/chronic
     description: "A tool that hides output unless the command fails; now in Go!"
     test: |
