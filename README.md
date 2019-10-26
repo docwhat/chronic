@@ -1,4 +1,4 @@
-[![GitHub release](https://img.shields.io/github/release/docwhat/chronic.svg)](https://github.com/docwhat/chronic/releases) </br> [![GitHub Actions](https://github.com/docwhat/chronic/workflows/release/badge.svg)](https://github.com/docwhat/chronic/actions?workflow=release) [![Go Report Card](https://goreportcard.com/badge/github.com/docwhat/chronic)](https://goreportcard.com/report/github.com/docwhat/chronic) [![GitHub issues](https://img.shields.io/github/issues/docwhat/chronic.svg)](https://github.com/docwhat/chronic/issues)
+[![GitHub Actions](https://github.com/docwhat/chronic/workflows/release/badge.svg)](https://github.com/docwhat/chronic/actions?workflow=release) [![GitHub release](https://img.shields.io/github/release/docwhat/chronic.svg)](https://github.com/docwhat/chronic/releases) [![Go Report Card](https://goreportcard.com/badge/github.com/docwhat/chronic)](https://goreportcard.com/report/github.com/docwhat/chronic) [![GitHub issues](https://img.shields.io/github/issues/docwhat/chronic.svg)](https://github.com/docwhat/chronic/issues)
 
 # chronic
 
