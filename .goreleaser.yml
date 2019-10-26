@@ -65,6 +65,8 @@ brews:
     description: "A tool that hides output unless the command fails; now in Go!"
     test: |
       system "#{bin}/chronic"
+    install: |
+      bin.install "chronic"
 
 changelog:
   sort: asc
