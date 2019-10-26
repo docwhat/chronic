@@ -1,8 +1,14 @@
 name: build
 
 on:
-  pull_request:
   push:
+    branches:
+      - "master"
+    tags:
+      - "!*"
+  pull_request:
+    branches:
+      - '*'
   schedule:
     - cron: "53 22 * * 2"
 

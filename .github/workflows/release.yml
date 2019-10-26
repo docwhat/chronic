@@ -3,12 +3,9 @@ name: release
 on:
   push:
     branches:
-      - "master"
-    tags:
       - "!*"
-  pull_request:
-    branches:
-      - '*'
+    tags:
+      - "v*.*.*"
 
 jobs:
   test:
