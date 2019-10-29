@@ -49,6 +49,7 @@ archives:
 
 checksum:
   name_template: "checksums.txt"
+
 snapshot:
   name_template: "{{ .Tag }}-next"
 
@@ -65,6 +66,7 @@ brews:
       name: "Christian Höltje"
       email: "docwhat@gerf.org"
     skip_upload: "auto"
+    folder: "Formula"
     homepage:  "https://github.com/docwhat/chronic"
     description: "A tool that hides output unless the command fails; now in Go!"
     test: |
