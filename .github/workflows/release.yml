@@ -61,6 +61,6 @@ jobs:
         name: goreleaser
         uses: goreleaser/goreleaser-action@v1
         with:
-          args: release
+          args: release --debug
         env:
           GITHUB_TOKEN: ${{ secrets.CUSTOM_GITHUB_TOKEN }}
