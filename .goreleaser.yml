@@ -61,11 +61,11 @@ release:
 
 brews:
   - ids: ["homebrew"]
-    github:
+    tap:
       owner: docwhat
       name: homebrew-tap
     commit_author:
-      name: "Christian Höltje"
+      name: "Christian Höltje"
       email: "docwhat@gerf.org"
     skip_upload: "auto"
     folder: "Formula"
