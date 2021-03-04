@@ -5,4 +5,4 @@ name = "go"
 enabled = true
 
   [analyzers.meta]
-  import_path = "docwhat.org/chronic"
+  import_paths = ["docwhat.org/chronic"]
