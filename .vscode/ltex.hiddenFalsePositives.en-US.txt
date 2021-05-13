@@ -1,1 +1,3 @@
 {"rule":"MORFOLOGIK_RULE_EN_US","sentence":"^\\Q<golang.org> has some good instructions on installing Go.\\E$"}
+{"rule":"MORFOLOGIK_RULE_EN_US","sentence":"^\\QChuck Houpt wrote the original \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q.\\E$"}
+{"rule":"ENGLISH_WORD_REPEAT_BEGINNING_RULE","sentence":"^\\QIf you log to a file, then you have to rotate that log, even if 99% of the contents are useless.\\E$"}
