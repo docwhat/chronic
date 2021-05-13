@@ -1,0 +1,1 @@
+{"rule":"MORFOLOGIK_RULE_EN_US","sentence":"^\\Q<golang.org> has some good instructions on installing Go.\\E$"}

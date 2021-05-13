@@ -1,12 +1,12 @@
 # Contributing
 
-I love pull requests from everyone!
+I love pull-requests from everyone!
 
 ## Getting Started
 
 ### Install Go
 
-First you'll need to make sure you have the latest version. golang.org has some [good instructions on installing Go](https://golang.org/doc/install).
+First you'll need to make sure you have the latest version. <golang.org> has some [good instructions on installing Go](https://golang.org/doc/install).
 
 ### Getting the source
 
