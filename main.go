@@ -2,6 +2,7 @@ package main
 
 import (
 	"bufio"
+	"errors"
 	"fmt"
 	"io"
 	"io/ioutil"
@@ -28,10 +29,10 @@ func parseFlags() {
 }
 
 func showUsage() {
-	fmt.Printf("Usage: %s <command> [args]...\n", program)
-	fmt.Printf("Version: %s\n", version)
-	fmt.Println("")
-	fmt.Println("  Chronic runs the <command> and hides the output unless the command returns a non-zero exit code.")
+	fmt.Fprintf(os.Stdout, "Usage: %s <command> [args]...\n", program)
+	fmt.Fprintf(os.Stdout, "Version: %s\n", version)
+	fmt.Fprintf(os.Stdout, "\n")
+	fmt.Fprintf(os.Stdout, "  Chronic runs the <command> and hides the output unless the command returns a non-zero exit code.\n")
 }
 
 func tempFile(prefix string) *os.File {
@@ -46,9 +47,9 @@ func tempFile(prefix string) *os.File {
 }
 
 func emitCommand() {
-	fmt.Printf("**** command ****\n")
-	fmt.Printf("%#q\n", command)
-	fmt.Println()
+	fmt.Fprintf(os.Stdout, "**** command ****\n")
+	fmt.Fprintf(os.Stdout, "%#q\n", command)
+	fmt.Fprintf(os.Stdout, "\n")
 }
 
 func emitOutput(name string, file io.ReadSeeker) {
@@ -61,25 +62,26 @@ func emitOutput(name string, file io.ReadSeeker) {
 
 	for buff.Scan() {
 		if !shownHeader {
-			fmt.Printf("**** %s ****\n", name)
+			fmt.Fprintf(os.Stdout, "**** %s ****\n", name)
 			shownHeader = true
 		}
-		fmt.Printf("%s: %s\n", name, buff.Text())
+		fmt.Fprintf(os.Stdout, "%s: %s\n", name, buff.Text())
 	}
 
 	if shownHeader {
-		fmt.Println()
+		fmt.Fprintf(os.Stdout, "\n")
 	}
 }
 
 func fatal(err error) int {
-	fmt.Printf("[FATAL %s] %s\n", program, err)
+	fmt.Fprintf(os.Stdout, "[FATAL %s] %s\n", program, err)
 	if user, err := user.Current(); err == nil {
-		fmt.Printf("[FATAL %s] User:  %q (%s)\n", program, user.Username, user.Uid)
+		fmt.Fprintf(os.Stdout, "[FATAL %s] User:  %q (%s)\n", program, user.Username, user.Uid)
 	}
-	fmt.Printf("[FATAL %s] $PATH: %s\n", program, os.Getenv("PATH"))
-	fmt.Printf("\n")
+	fmt.Fprintf(os.Stdout, "[FATAL %s] $PATH: %s\n", program, os.Getenv("PATH"))
+	fmt.Fprintf(os.Stdout, "\n")
 	showUsage()
+
 	return -1
 }
 
@@ -115,20 +117,23 @@ func run() int {
 	}
 
 	if err := cmd.Wait(); err != nil {
-		if exiterr, ok := err.(*exec.ExitError); ok {
+		var exiterr *exec.ExitError
+		if errors.As(err, &exiterr) {
 			emitCommand()
 			emitOutput("stdout", tmpOut)
 			emitOutput("stderr", tmpErr)
 
 			if status, ok := exiterr.Sys().(syscall.WaitStatus); ok {
 				ec := status.ExitStatus()
-				fmt.Printf("Exited with %d\n", ec)
+				fmt.Fprintf(os.Stdout, "Exited with %d\n", ec)
+
 				return ec
 			}
 		} else {
 			return fatal(err)
 		}
 	}
+
 	return 0
 }
 

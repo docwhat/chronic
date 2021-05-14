@@ -11,3 +11,4 @@ linters:
     - maligned
     - scopelint
     - wsl
+  fast: false
