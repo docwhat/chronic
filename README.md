@@ -30,9 +30,9 @@ This is an anti-pattern:
 With `chronic` you don't have to worry about that anymore!
 
 ```crontab
- MAILTO=admin@example.com
- PATH=/usr/bin:/bin
- 0 4 0 0 0 chronic my-noisy-command -vF
+MAILTO=admin@example.com
+PATH=/usr/bin:/bin
+0 4 0 0 0 chronic my-noisy-command -vF
 ```
 
 Now, you'll get no emails unless `my-noisy-command` returns a non-zero exit code. If it does return a non-zero exit code, then you'll get an email that looks like this:

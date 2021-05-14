@@ -23,6 +23,8 @@ _testmain.go
 *.test
 *.prof
 
+*.log
+
 # My binaries
 /chronic
 /chronic_darwin*

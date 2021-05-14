@@ -1,14 +1,13 @@
-service:
-  golangci-lint-version: 1.21.x
-
-run:
-  tests: false
-
+---
 linters:
   enable-all: true
   disable:
     - funlen
     - gochecknoglobals
     - godox
+    - golint
+    - interfacer
     - lll
+    - maligned
+    - scopelint
     - wsl

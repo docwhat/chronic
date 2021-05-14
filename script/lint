@@ -3,10 +3,15 @@
 # Sets up all the dependencies, etc. so you can build and test.
 
 set -euo pipefail
-# shellcheck source=./utilities.bash
+
+# shellcheck source=script/utilities.bash
 source "$(dirname "$0")/utilities.bash"
 
 header "Lint"
-golangci-lint run ./...
+docker run \
+  --rm \
+  --env=RUN_LOCAL=true \
+  --volume="${PWD}:/tmp/lint" \
+  github/super-linter
 
 # vim: set ft=sh :
