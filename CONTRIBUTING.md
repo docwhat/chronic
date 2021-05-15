@@ -46,3 +46,9 @@ Some things will increase the chance that your pull request is accepted:
 
 -   Write tests.
 -   Write a [good commit message](http://tbaggery.com/2008/04/19/a-note-about-git-commit-messages.html).
+
+## Why is this repo over-engineered?
+
+Firstly, it is because this is a tool that is likely to be downloaded once and just used forever.  It must not fail unless it is for a darn good reason. It
+
+Secondly, it is because I use this repo to test various GitHub bots, techniques, and CI features.
