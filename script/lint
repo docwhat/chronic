@@ -7,11 +7,17 @@ set -euo pipefail
 # shellcheck source=script/utilities.bash
 source "$(dirname "$0")/utilities.bash"
 
-header "Lint"
-docker run \
-  --rm \
-  --env=RUN_LOCAL=true \
-  --volume="${PWD}:/tmp/lint" \
-  github/super-linter
+header "Golangci Linter"
+golangci-lint run --verbose --config=.golangci.yml
+
+if [[ -z ${CI:-} ]]; then
+  header "Super Linter"
+  docker run \
+    --rm \
+    --env=RUN_LOCAL=true \
+    --env=VALIDATE_GO=false \
+    --volume="${PWD}:/tmp/lint" \
+    github/super-linter
+fi
 
 # vim: set ft=sh :

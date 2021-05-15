@@ -31,4 +31,9 @@ if ! bash_is_new_enough; then
 fi
 bash --version
 
+header golangci-lint
+curl -sSfL \
+  https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh |
+  sh -s 'v1.40.1'
+
 # vim: set ft=sh :

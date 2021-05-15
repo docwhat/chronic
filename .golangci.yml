@@ -10,5 +10,6 @@ linters:
     - lll
     - maligned
     - scopelint
+    - typecheck
     - wsl
   fast: false
