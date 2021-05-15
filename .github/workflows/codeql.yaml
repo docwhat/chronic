@@ -21,7 +21,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: detect go versios
+      - name: detect go version
         id: detect
         run: echo "::set-output name=go-version::$(grep "^go " go.mod | cut -d " " -f 2)"
 
