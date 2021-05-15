@@ -1,0 +1,27 @@
+name: "Test Code 🧪"
+
+on: ["push", "pull_request"]
+
+jobs:
+  test:
+    name: "test"
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macOS-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+
+      - name: detect go versios
+        id: detect
+        run: echo "::set-output name=go-version::$(grep "^go " go.mod | cut -d " " -f 2)"
+
+      - name: "get go"
+        uses: actions/setup-go@v2
+        with:
+          go-version: ${{ steps.detect.outputs.go-version }}
+
+      - name: test
+        run: |
+          ./script/test

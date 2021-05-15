@@ -1,0 +1,35 @@
+name: "Ship a Release 🐿"
+
+on:
+  push:
+    branches:
+      - "!*"
+    tags:
+      - "v*.*.*"
+
+jobs:
+  release:
+    name: "release"
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+
+      - name: detect go versios
+        id: detect
+        run: echo "::set-output name=go-version::$(grep "^go " go.mod | cut -d " " -f 2)"
+
+      - name: "wait for tests to pases"
+        uses: jitterbit/await-check-suites@v1
+
+      - name: "get go"
+        uses: actions/setup-go@v2
+        with:
+          go-version: ${{ steps.detect.outputs.go-version }}
+
+      - name: goreleaser
+        uses: goreleaser/goreleaser-action@v2
+        with:
+          args: release --debug
+        env:
+          GITHUB_TOKEN: ${{ secrets.CUSTOM_GITHUB_TOKEN }}
