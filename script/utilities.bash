@@ -35,18 +35,20 @@ function join_by() {
   echo "$*"
 }
 
+function bash_is_new_enough() {
+  bash -c 'if ((BASH_VERSINFO[0] < 5)); then exit 2; fi'
+}
+
+function assert_bash_is_new_enough() {
+  if ! bash_is_new_enough; then
+    fatal "BASH version 5 or newer is required. Try running ./script/bootstrap"
+  fi
+}
+
 function fatal() {
   local msg="$*"
   echo "[FATAL] $msg" 1>&2
   exit 4
-}
-
-function assert() {
-  if "$@"; then
-    return 0
-  else
-    fatal "assertion failed: $*"
-  fi
 }
 
 # vim: set ft=sh :

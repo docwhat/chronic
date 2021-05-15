@@ -1,20 +1,34 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 set -euo pipefail
 
 # shellcheck source=script/utilities.bash
 source "$(dirname "$0")/utilities.bash"
 
-mkdir -p bin
+header "bash shell"
+if ! bash_is_new_enough; then
+  mkdir -p bin
 
-header "Fetch bash"
-curl \
-  -fsSL \
-  -z bin/bash \
-  -o bin/bash \
-  https://github.com/robxu9/bash-static/releases/latest/download/bash-macos-x86_64
+  case "$OSTYPE" in
+  darwin*)
+    bin_name=bash-macos-x86_64
+    ;;
+  linux*)
+    bin_name="bash-linux-$(uname -m)"
+    ;;
+  *)
+    fatal "Unable to find bash for $OSTYPE $(uname -m); Sorry."
+    ;;
+  esac
 
-chmod +x bin/bash
-bin/bash --version
+  curl \
+    -fsSL \
+    -z bin/bash \
+    -o bin/bash \
+    "https://github.com/robxu9/bash-static/releases/latest/download/${bin_name}"
+
+  chmod +x bin/bash
+fi
+bash --version
 
 # vim: set ft=sh :

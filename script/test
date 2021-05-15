@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 #
 # Runs all tests.
 
@@ -11,6 +11,6 @@ header "Unit Tests"
 go test -v
 
 header "Functional Tests"
-"$(dirname "$0")/bats"
+script/bats
 
 # vim: set ft=sh :
