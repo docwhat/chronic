@@ -24,6 +24,10 @@ jobs:
         with:
           go-version: ${{ steps.detect.outputs.go-version }}
 
+      - name: "bootstrap"
+        run: |
+          ./script/bootstrap
+
       - name: test
         run: |
           ./script/test

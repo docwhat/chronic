@@ -2,8 +2,15 @@
 
 set -euo pipefail
 
+# shellcheck source=script/utilities.bash
+source "$(dirname "$0")/utilities.bash"
+
+if ! bash -c 'if ((BASH_VERSINFO[0] < 5)); then exit 2; fi'; then
+  fatal "*** bash version 5+ is required; run script/bootstrap to fetch a newer bash ***" 1>&2
+fi
+
 if [[ $# -le 0 ]]; then
-  set -- --jobs 6 "test"
+  set -- "test"
 fi
 
 exec \

@@ -6,11 +6,7 @@ load test_helper/bats-support/load.bash
 
 setup_file() {
   export random_version="v${RANDOM}"
-  go build -a -o "${BATS_TMPDIR:?}/chronic" -ldflags="-X 'main.version=${random_version:?}'" ./
-  go build
-  if ((BASH_VERSINFO[0] < 4)); then
-    fail "*** bash version 4+ is required ***"
-  fi
+  go build -o "${BATS_TMPDIR:?}/chronic" -ldflags="-X 'main.version=${random_version:?}'" ./
 }
 
 function run_chronic {
