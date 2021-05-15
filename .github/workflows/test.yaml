@@ -13,6 +13,7 @@ jobs:
       - name: checkout
         uses: actions/checkout@v2
         with:
+          path: ./
           submodules: true
 
       - name: detect go version
