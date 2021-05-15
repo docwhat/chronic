@@ -1,0 +1,13 @@
+#!/bin/bash
+
+set -euo pipefail
+
+if [[ $# -le 0 ]]; then
+  set -- --jobs 6 "test"
+fi
+
+exec \
+  "$(dirname "$(dirname "$0")")"/test/bats/bin/bats \
+  "$@"
+
+# EOF

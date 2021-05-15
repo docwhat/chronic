@@ -35,4 +35,18 @@ function join_by() {
   echo "$*"
 }
 
+function fatal() {
+  local msg="$*"
+  echo "[FATAL] $msg" 1>&2
+  exit 4
+}
+
+function assert() {
+  if "$@"; then
+    return 0
+  else
+    fatal "assertion failed: $*"
+  fi
+}
+
 # vim: set ft=sh :
