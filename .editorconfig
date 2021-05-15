@@ -12,3 +12,9 @@ trim_trailing_whitespace = true
 [*.go]
 indent_size = 4
 indent_style = tab
+
+[*.json]
+insert_final_newline = false
+
+[.gitmodules]
+indent_style = tab
