@@ -23,7 +23,7 @@ jobs:
           ./script/lint
 
       - name: "super lint"
-        uses: github/super-linter@v4.6.0
+        uses: github/super-linter@v4.6.1
         env:
           VALIDATE_GO: false
           DEFAULT_BRANCH: main
