@@ -1,40 +1,37 @@
 # http://goreleaser.com
-env:
-  - GO111MODULE=on
-  - GOPROXY=https://gocenter.io
 before:
   hooks:
-    - go mod tidy
+    - 'go mod tidy'
 builds:
-  - id: default
-    binary: chronic
+  - id: 'default'
+    binary: 'chronic'
     goos:
-      - "linux"
-      - "darwin"
-      - "windows"
-      - "freebsd"
+      - 'freebsd'
+      - 'openbsd'
+      - 'solaris'
+      - 'windows'
+      - 'linux'
+      - 'darwin'
     goarch:
-      - "386"
-      - "amd64"
-      - "arm"
-      - "arm64"
-      - "ppc64le"
-      - "s390x"
+      - 'amd64'
+      - '386'
+      - 'arm'
+      - 'arm64'
     ignore:
-      - goos: "darwin"
-        goarch: "386"
-      - goos: "freebsd"
-        goarch: "arm64"
+      - goos: 'darwin'
+        goarch: '386'
+      - goos: 'freebsd'
+        goarch: 'arm64'
     env:
       - CGO_ENABLED=0
   - id: homebrew
     binary: chronic
     goos:
-      - linux
-      - darwin
+      - 'linux'
+      - 'darwin'
     goarch:
-      - 386
-      - amd64
+      - 'amd64'
+      - 'arm64'
 
 archives:
   - id: default
