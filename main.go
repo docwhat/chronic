@@ -3,50 +3,58 @@ package main
 import (
 	"bufio"
 	"errors"
+	"flag"
 	"fmt"
 	"io"
-	"io/ioutil"
 	"os"
 	"os/exec"
 	"os/user"
 	"path/filepath"
 	"syscall"
+	"time"
 )
 
 var (
 	version = "unknown"
 	command []string
 	program = filepath.Base(os.Args[0])
+	timeout = 0
 )
 
 func parseFlags() {
-	if len(os.Args) == 1 {
+	flag.IntVar(&timeout, "t", 0, "Command timeout")
+	flag.Parse()
+
+	command = flag.Args()
+
+	if len(command) == 0 {
 		showUsage()
 		os.Exit(0)
 	}
-
-	command = os.Args[1:]
 }
 
 func showUsage() {
-	fmt.Fprintf(os.Stdout, "Usage: %s <command> [args]...\n", program)
+	fmt.Fprintf(os.Stdout, "Usage: %s [-t TIMEOUT] <command> [args]...\n", program)
 	fmt.Fprintf(os.Stdout, "Version: %s\n", version)
 	fmt.Fprintf(os.Stdout, "\n")
-	fmt.Fprintf(os.Stdout, "  Chronic runs the <command> and hides the output unless the command returns a non-zero exit code.\n")
+	fmt.Fprintf(os.Stdout, "  Chronic runs the <command> and hides the output unless the command returns a non-zero exit code. You can specify a timeout, after that, the process will be killed.\n")
 }
 
 func tempFile(prefix string) *os.File {
 	var tempFile *os.File
 	var err error
 
-	if tempFile, err = ioutil.TempFile("", program+"-"+prefix); err != nil {
+	if tempFile, err = os.CreateTemp("", program+"-"+prefix); err != nil {
 		fatal(err)
 	}
 
 	return tempFile
 }
 
-func emitCommand() {
+func emitCommand(killed bool) {
+	if killed {
+		fmt.Fprintf(os.Stdout, "**** Timeout, process killed! ****\n\n")
+	}
 	fmt.Fprintf(os.Stdout, "**** command ****\n")
 	fmt.Fprintf(os.Stdout, "%#q\n", command)
 	fmt.Fprintf(os.Stdout, "\n")
@@ -104,6 +112,16 @@ func run() int {
 		return fatal(err)
 	}
 
+	killed := false
+	if timeout > 0 {
+		var timer *time.Timer
+		timer = time.AfterFunc(time.Duration(timeout)*time.Second, func() {
+			timer.Stop()
+			killed = true
+			cmd.Process.Kill()
+		})
+	}
+
 	tmpOut := tempFile("stdout")
 	defer os.Remove(tmpOut.Name())
 	if _, err = io.Copy(tmpOut, stdout); err != nil {
@@ -119,7 +137,7 @@ func run() int {
 	if err := cmd.Wait(); err != nil {
 		var exiterr *exec.ExitError
 		if errors.As(err, &exiterr) {
-			emitCommand()
+			emitCommand(killed)
 			emitOutput("stdout", tmpOut)
 			emitOutput("stderr", tmpErr)
 
