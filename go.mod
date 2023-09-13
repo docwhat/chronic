@@ -1,3 +1,3 @@
 module docwhat.org/chronic
 
-go 1.16
+go 1.20
