@@ -22,7 +22,7 @@ function it_shows_help_successfully { #@test
 
 function help_shows_usage { #@test
   run_chronic
-  assert_line --index 0 "Usage: chronic <command> [args]..."
+  assert_line --index 0 "Usage: chronic [-t TIMEOUT] <command> [args]..."
 }
 
 function help_shows_the_version { #@test
@@ -87,6 +87,11 @@ function it_displays_standard_error_on_failure { #@test
   run_chronic bash -c 'echo -e "In Xanadu did Kubla Khan\nA stately pleasure-dome decree" 1>&2; exit 9'
   assert_line "stderr: In Xanadu did Kubla Khan"
   assert_line "stderr: A stately pleasure-dome decree"
+}
+
+function it_displays_timeout_failure { #@test
+  run_chronic -t 1 bash -c 'sleep 5'
+  assert_line "**** Timeout, process killed! ****"
 }
 
 # EOF
