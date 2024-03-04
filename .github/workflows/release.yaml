@@ -23,7 +23,7 @@ jobs:
         uses: jitterbit/await-check-suites@v1
 
       - name: "get go"
-        uses: actions/setup-go@v3
+        uses: actions/setup-go@v5
         with:
           go-version: ${{ steps.detect.outputs.go-version }}
 
