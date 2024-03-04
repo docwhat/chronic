@@ -28,7 +28,7 @@ jobs:
           go-version: ${{ steps.detect.outputs.go-version }}
 
       - name: goreleaser
-        uses: goreleaser/goreleaser-action@v4
+        uses: goreleaser/goreleaser-action@v5
         with:
           args: release --debug
         env:
